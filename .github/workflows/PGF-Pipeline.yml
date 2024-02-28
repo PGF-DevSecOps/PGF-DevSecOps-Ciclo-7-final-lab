@@ -12,15 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-    #- uses: actions/checkout@v3
-    #- name: Descarga repositorio Lab Final
     
     - name: Ejecuta mensaje         
       run: |
         echo "PGF-Pipeline-Test"
 
-  test:
+  Sast:
     needs: build    
     runs-on: ubuntu-latest
    
@@ -39,3 +36,24 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  SCA:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Descarga repositorio
+      uses: actions/checkout@v3
+
+    - name: Compilacion JAVA
+      run: |
+        chmod +x gradlew
+        ./gradlew build
+
+
+    #- name: SCA-Dependency Check
+      #uses: dependency-check/Dependency-Check_Action@1.1.0
+      #with:
+        #project: 'PGF-DevSecOps-Ciclo-7-final-lab'
+        #path: '.'
+        #format: 'HTML'
