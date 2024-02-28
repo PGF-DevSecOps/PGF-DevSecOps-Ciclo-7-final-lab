@@ -12,56 +12,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
-    - name: Ejecuta mensaje  
-    #.cambiar por compilacion y agregar copia de Jar a raiz del proyecto       
-      run: |
-        echo "PGF-Pipeline-Test"
-
-  Sast:
-    needs: build    
-    runs-on: ubuntu-latest
-   
-    steps:
-
-    - name: Descarga repositorio Lab Final
-      uses: actions/checkout@v4
-        
-    - name: SAST-SonarCloud
-      uses: sonarsource/sonarcloud-github-action@master
-      with:
-        projectBaseDir: .
-        args: >
-          -Dsonar.organization=pgf-devsecops
-          -Dsonar.projectKey=PGF-DevSecOps_PGF-DevSecOps-Ciclo-7-final-lab
-          -Dsonar.host.url=https://sonarcloud.io/
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  SCA:
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
 
     - name: Descarga repositorio
       uses: actions/checkout@v3
-
-    #- name: Compilacion JAVA
-      #run: |
-        #chmod +x gradlew
-        #./gradlew build
-
+    
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '14'
- 
+        node-version: '14'   
+
+    #- name: Copia de Jar a Raiz de proyecto
+      #run: |
+          #cp $GITHUB_WORKSPACE/build/libs/spring-petclinic-2.6.0.jar .
+          #chmod 777 spring-petclinic-2.6.0.jar
+          #ls -ltra
+        
     - name: Install Dependencies
       run: npm install
-    
-    #- name: Run Action
-      #run: node index.js
 
     - name: SCA-Dependency-check
       uses: dependency-check/Dependency-Check_Action@1.1.0
@@ -76,12 +43,21 @@ jobs:
         name: Reporte PG-Dependency-check 
         path: ${{github.workspace}}/reports     
 
+  
+    - name: Descarga repositorio Lab Final
+      uses: actions/checkout@v4
+        
+    - name: SAST-SonarCloud
+      uses: sonarsource/sonarcloud-github-action@master
+      with:
+        projectBaseDir: .
+        args: >
+          -Dsonar.organization=pgf-devsecops
+          -Dsonar.projectKey=PGF-DevSecOps_PGF-DevSecOps-Ciclo-7-final-lab
+          -Dsonar.host.url=https://sonarcloud.io/
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  Trivi:
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
     - name: Docker Login
       uses: docker/login-action@v3.0.0
       with:
@@ -93,10 +69,10 @@ jobs:
       #run: !
         #docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
 
-    - name: Build y Push Docker
-      run: !
-        docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
-        docker push pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab
+    #- name: Build y Push Docker
+      #run: !
+        #docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
+        #docker push pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab
     
     # Agregar analisis de imagen con trivi   
    
