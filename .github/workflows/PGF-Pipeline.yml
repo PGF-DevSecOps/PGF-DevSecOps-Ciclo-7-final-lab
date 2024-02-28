@@ -39,17 +39,28 @@ jobs:
 
   SCA:
     runs-on: ubuntu-latest
-
+    needs: build
+    
     steps:
 
     - name: Descarga repositorio
       uses: actions/checkout@v3
 
-    - name: Compilacion JAVA
-      run: |
-        chmod +x gradlew
-        ./gradlew build
+    #- name: Compilacion JAVA
+      #run: |
+        #chmod +x gradlew
+        #./gradlew build
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+ 
+    - name: Install Dependencies
+      run: npm install
+    
+    - name: Run Action
+      run: node index.js
 
     #- name: SCA-Dependency Check
       #uses: dependency-check/Dependency-Check_Action@1.1.0
