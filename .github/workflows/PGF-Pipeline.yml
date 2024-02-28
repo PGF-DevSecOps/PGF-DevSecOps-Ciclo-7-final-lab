@@ -44,8 +44,8 @@ jobs:
         path: ${{github.workspace}}/reports     
 
   
-    - name: Descarga repositorio Lab Final
-      uses: actions/checkout@v4
+    #- name: Descarga repositorio Lab Final
+      #uses: actions/checkout@v4
         
     - name: SAST-SonarCloud
       uses: sonarsource/sonarcloud-github-action@master
