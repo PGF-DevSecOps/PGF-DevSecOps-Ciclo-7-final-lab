@@ -93,10 +93,10 @@ jobs:
       #run: !
         #docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
 
-    #- name: Build Docker
-      #run: !
-        #docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
-        #docker push pamelagarciafarias/netflix:latest
+    - name: Build y Push Docker
+      run: !
+        docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
+        docker push pamelagarciafarias/netflix:latest
     
     # Agregar analisis de imagen con trivi   
    
