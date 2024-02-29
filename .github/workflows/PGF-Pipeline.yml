@@ -63,40 +63,8 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        
-jobs:
-  
-  build:
-    
-    runs-on: ubuntu-latest
+          
 
-    steps:
-
-    - name: Descarga repositorio
-      uses: actions/checkout@v3
-
-Trivy:
-  needs: build
-    runs-on: ubuntu-latest
-
-  steps:
-
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Build Docker image
-      run: docker build -t pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest .
-
-    - name: Log in to Docker Hub
-      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Tag Docker image
-      run: docker tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest ${{ secrets.DOCKER_USERNAME }}/pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest:latest
-
-    - name: Push Docker image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
-
-        
     #- name: Build Docker
       #run: !
         #docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
