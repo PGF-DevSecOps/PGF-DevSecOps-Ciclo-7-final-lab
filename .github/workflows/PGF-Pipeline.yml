@@ -65,22 +65,19 @@ jobs:
       - name: Build Docker
         run: docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest .
 
-      # realizar analisis de la imagen docker
-
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest"
+          format: "table"
+          exit-code: "1"
+          vuln-type: "os,library"
+          severity: "CRITICAL,HIGH,MEDIUM"
+          
       - name: Push to Docker registry
         run: docker push pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab
 
-    #- name: Build y Push Docker
-    #run: !
-    #docker build --tag pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
-    #docker push pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab
-
-    # Agregar analisis de imagen con trivi
-
-    #- name: Push Docker
-    #run: !
-    #docker push pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab
-
+   
     # agregar desplkiegue con minikube
 
   #Minikube:
