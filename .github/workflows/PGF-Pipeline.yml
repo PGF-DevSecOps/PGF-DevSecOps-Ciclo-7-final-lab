@@ -77,23 +77,18 @@ jobs:
       - name: Push to Docker registry
         run: docker push pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab
 
-  deploy:
-    needs: build
-    runs-on: self-hosted
-    
-    steps:
+ 
+      - name: Pull de la Imagen Docker
+        run: |
+          docker pull pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
 
-    - name: Pull de la Imagen Docker
-      run: |
-        docker pull pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
+      - name: Despliegue de themoviedb
+        run: |
+          docker run -p 8080:8085 --name themoviedb-deploy -d pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
 
-    - name: Despliegue de themoviedb
-      run: |
-        docker run -p 8080:8085 --name themoviedb-deploy -d pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest
-
-    - name: Sleep
-      run: | 
-        sleep 30
+      - name: Sleep
+        run: | 
+          sleep 30
 
 
     #- name: OWASP ZAP Scan
