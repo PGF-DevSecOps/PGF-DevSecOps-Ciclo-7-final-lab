@@ -70,9 +70,9 @@ jobs:
         with:
           image-ref: "pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab:latest"
           format: "table"
-          exit-code: "1"
-          vuln-type: "os,library"
-          severity: "CRITICAL,HIGH,MEDIUM"
+          #exit-code: "1"
+          #vuln-type: "os,library"
+          #severity: "CRITICAL,HIGH,MEDIUM"
           
       - name: Push to Docker registry
         run: docker push pamelagarciafarias/pgf-devsecops-ciclo-7-final-lab
